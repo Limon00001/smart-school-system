@@ -129,7 +129,7 @@ const Menu = () => {
             <Link
               key={item.label}
               href={item.href}
-              className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2"
+              className="flex items-center justify-center lg:justify-start gap-4 text-gray-500"
             >
               <div className="flex items-center gap-2 p-2">
                 {item.icon}

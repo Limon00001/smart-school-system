@@ -11,6 +11,7 @@ import Link from 'next/link';
 
 // Internal Imports
 import Menu from '@/components/Menu';
+import Navbar from '@/components/Navbar';
 
 /**
  * Dashboard Layout
@@ -36,7 +37,13 @@ export default function DashboardLayout({
         <Menu />
       </div>
       {/* RIGHT */}
-      <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%]">R</div>
+      <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-[#f7f8fa] overflow-scroll">
+        {/* NAVBAR */}
+        <Navbar />
+
+        {/* CONTENT */}
+        {children}
+      </div>
     </div>
   );
 }
