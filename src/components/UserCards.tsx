@@ -18,7 +18,7 @@ const UserCards = ({ type }: { type: string }) => {
         <span className="text-[10px] bg-white rounded-full px-2 py-1 text-green-600">
           2024/25
         </span>
-        <Ellipsis />
+        <Ellipsis className="w-6 h-6 text-black/30" />
       </div>
       <h1 className="text-2xl font-semibold my-4">1,123</h1>
       <h2 className="capitalize text-sm font-medium text-gray-500">{type}</h2>
