@@ -8,6 +8,7 @@
 // Internal Imports
 import AttendenceChart from '@/components/AttendenceChart';
 import CountChart from '@/components/CountChart';
+import FinanceChart from '@/components/FinanceChart';
 import UserCards from '@/components/UserCards';
 
 /**
@@ -37,6 +38,9 @@ const AdminPage = () => {
           </div>
         </div>
         {/* BOTTOM SECTION */}
+        <div className="w-full h-[500px]">
+          <FinanceChart />
+        </div>
       </div>
       {/* RIGHT SIDE */}
       <div className="w-full lg:w-1/3">R</div>
