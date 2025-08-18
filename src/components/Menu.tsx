@@ -7,7 +7,9 @@
 
 // External Imports
 import {
+  BookCheck,
   Calendar,
+  Cast,
   CircleUser,
   GraduationCap,
   House,
@@ -25,6 +27,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+// Internal Imports
+import { role } from '@/lib/data';
+
 // Menu Items Array
 const menuItems = [
   {
@@ -34,61 +39,85 @@ const menuItems = [
         label: 'Home',
         icon: <House />,
         href: '/',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Teachers',
         icon: <GraduationCap />,
-        href: '/teachers',
+        href: '/list/teachers',
+        visible: ['admin', 'teacher'],
       },
       {
         label: 'Parents',
         icon: <Users />,
-        href: '/parents',
+        href: '/list/parents',
+        visible: ['admin', 'teacher'],
       },
       {
         label: 'Students',
         icon: <User />,
-        href: '/students',
+        href: '/list/students',
+        visible: ['admin', 'teacher'],
+      },
+      {
+        icon: <BookCheck />,
+        label: 'Subjects',
+        href: '/list/subjects',
+        visible: ['admin'],
       },
       {
         label: 'Classes',
         icon: <IdCard />,
-        href: '/classes',
+        href: '/list/classes',
+        visible: ['admin', 'teacher'],
       },
       {
         label: 'Lessons',
         icon: <NotebookPen />,
-        href: '/lessons',
+        href: '/list/lessons',
+        visible: ['admin', 'teacher'],
       },
       {
         label: 'Exams',
         icon: <NotepadText />,
-        href: '/exams',
+        href: '/list/exams',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Assignments',
         icon: <PcCase />,
-        href: '/assignments',
+        href: '/list/assignments',
+        visible: ['admin', 'teacher', 'student', 'parent'],
+      },
+      {
+        icon: <Cast />,
+        label: 'Results',
+        href: '/list/results',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Attendance',
         icon: <UserRoundCheck />,
-        href: '/Attendance',
+        href: '/list/attendance',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Events',
         icon: <Calendar />,
-        href: '/events',
+        href: '/list/events',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Messages',
         icon: <MessageCircle />,
-        href: '/messages',
+        href: '/list/messages',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Announcements',
         icon: <Megaphone />,
-        href: '/announcements',
+        href: '/list/announcements',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
     ],
   },
@@ -99,16 +128,19 @@ const menuItems = [
         label: 'Profile',
         icon: <CircleUser />,
         href: '/profile',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Settings',
         icon: <Settings />,
         href: '/settings',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
       {
         label: 'Logout',
         icon: <LogOut />,
         href: '/logout',
+        visible: ['admin', 'teacher', 'student', 'parent'],
       },
     ],
   },
@@ -125,18 +157,22 @@ const Menu = () => {
           <span className="hidden lg:block text-gray-400 font-light my-4">
             {menuItem.title}
           </span>
-          {menuItem.items.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="flex items-center justify-center lg:justify-start gap-4 text-gray-500"
-            >
-              <div className="flex items-center gap-2 p-2">
-                {item.icon}
-                <span className="hidden lg:block">{item.label}</span>
-              </div>
-            </Link>
-          ))}
+          {menuItem.items.map((item) => {
+            if (item.visible.includes(role)) {
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 md:px-2 rounded-md hover:bg-appSkyLight"
+                >
+                  <div className="flex items-center gap-2 p-2">
+                    {item.icon}
+                    <span className="hidden lg:block">{item.label}</span>
+                  </div>
+                </Link>
+              );
+            }
+          })}
         </div>
       ))}
     </div>
