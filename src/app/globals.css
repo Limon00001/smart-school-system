@@ -8,14 +8,20 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-appSky: #c3ebfa;
+  --color-appSkyLight: #edf9fd;
+  --color-appPurple: #cfceff;
+  --color-appPurpleLight: #f1f0ff;
+  --color-appYellow: #fae27c;
+  --color-appYellowLight: #fefce8;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ededed;
-    --foreground: #0a0a0a;
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
 }
 
