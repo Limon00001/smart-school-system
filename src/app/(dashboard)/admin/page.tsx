@@ -6,6 +6,7 @@
  */
 
 // Internal Imports
+import AttendenceChart from '@/components/AttendenceChart';
 import CountChart from '@/components/CountChart';
 import UserCards from '@/components/UserCards';
 
@@ -31,7 +32,9 @@ const AdminPage = () => {
             <CountChart />
           </div>
           {/* RIGHT CHART */}
-          <div className="w-full lg:w-2/3 h-[450px]"></div>
+          <div className="w-full lg:w-2/3 h-[450px]">
+            <AttendenceChart />
+          </div>
         </div>
         {/* BOTTOM SECTION */}
       </div>
