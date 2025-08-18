@@ -1,8 +1,20 @@
+/*
+ * Author: Monayem Hossain Limon
+ * GitHub: https://github.com/Limon00001
+ * Date: 18 Aug, 2025
+ * @copyright 2025 monayem_hossain_limon
+ */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* Tailwind */
 @import 'tailwindcss';
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --outfit: 'Outfit', sans-serif;
 }
 
 @theme inline {
@@ -16,6 +28,7 @@
   --color-appYellowLight: #fefce8;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-outfit: var(--outfit);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,5 +41,20 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-outfit);
+}
+
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  font-family: var(--font-outfit) !important;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-weight: 600;
+}
+
+.react-calendar__tile--active {
+  background: var(--color-appSky) !important;
+  color: black !important;
 }

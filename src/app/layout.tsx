@@ -1,19 +1,19 @@
 import type { Metadata as NextMetaData } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Outfit } from 'next/font/google';
 import './globals.css';
 
 export type Metadata = NextMetaData & {
   version: string;
 };
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const outfitSans = Outfit({
+  variable: '--font-outfit',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+// const geistMono = Geist_Mono({
+//   variable: '--font-geist-mono',
+//   subsets: ['latin'],
+// });
 
 export const metadata: Metadata = {
   title: 'SchoolApp',
@@ -34,11 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${outfitSans.variable} antialiased`}>{children}</body>
     </html>
   );
 }
