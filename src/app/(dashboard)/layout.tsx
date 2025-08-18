@@ -29,8 +29,8 @@ export default function DashboardLayout({
           href={'/'}
           className="flex items-center justify-center lg:justify-start gap-2"
         >
-          <GraduationCap className="w-8 h-8" />
-          <span className="hidden lg:block text-xl">SchoolApp</span>
+          <GraduationCap className="w-7 h-7" />
+          <span className="hidden lg:block text-lg font-bold">SchoolApp</span>
         </Link>
 
         {/* MENU */}
