@@ -68,7 +68,7 @@ const columns = [
 ];
 
 /**
- * Teacher List Page
+ * Student List Page
  */
 const StudentListPage = () => {
   // Render Table Row
