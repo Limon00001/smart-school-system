@@ -9,6 +9,7 @@
 import { ArrowDownWideNarrow, Plus, SlidersHorizontal } from 'lucide-react';
 
 // Internal Imports
+import Pagination from '@/components/Pagination';
 import TableSearch from '@/components/TableSearch';
 
 /**
@@ -21,7 +22,10 @@ const TeacherListPage = () => {
       <div className="flex items-center justify-between">
         <h1 className="hidden md:block text-lg font-semibold">All Teachers</h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+          {/* SEARCH */}
           <TableSearch />
+
+          {/* BUTTONS */}
           <div className="flex items-center gap-4 self-end">
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
               <SlidersHorizontal className="w-4 h-4" />
@@ -35,10 +39,11 @@ const TeacherListPage = () => {
           </div>
         </div>
       </div>
-      {/* LIST */}
-      <div></div>
+
+      {/* TABLE SECTION */}
+
       {/* PAGINATION */}
-      <div></div>
+      <Pagination />
     </div>
   );
 };
