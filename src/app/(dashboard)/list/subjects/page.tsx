@@ -8,9 +8,9 @@
 // External Imports
 import {
   ArrowDownWideNarrow,
-  Eye,
   Plus,
   SlidersHorizontal,
+  SquarePen,
   Trash,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -61,8 +61,8 @@ const SubjectListPage = () => {
         <td>
           <div className="flex items-center gap-2">
             <Link href={`/list/teachers/${item.id}`}>
-              <button className="w-7 h-7 flex items-center justify-center rounded-full bg-appSky cursor-pointer">
-                <Eye className="w-4 h-4" />
+              <button className="w-7 h-7 flex items-center justify-center rounded-full text-gray-600 bg-appSky cursor-pointer">
+                <SquarePen className="w-4 h-4" />
               </button>
             </Link>
             {role === 'admin' && (
