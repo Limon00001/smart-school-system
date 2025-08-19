@@ -9,6 +9,9 @@
 import { Calendar, Droplet, Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
 
+// Internal Imports
+import BigCalendar from '@/components/BigCalendar';
+
 /**
  * Individual Teacher Page Component
  */
@@ -60,7 +63,7 @@ const SingleTeacherPage = () => {
           {/* NORMAL CARD */}
           <div className="flex-1 flex justify-between gap-4 flex-wrap">
             {/* CARD 1 */}
-            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-full xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-[45%] xl:w-[45%] 2xl:w-[48%]">
               <Image
                 src={'/maleFemale.png'}
                 alt=""
@@ -74,7 +77,7 @@ const SingleTeacherPage = () => {
               </div>
             </div>
             {/* CARD 2 */}
-            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-full xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-[45%] xl:w-[45%] 2xl:w-[48%]">
               <Image
                 src={'/maleFemale.png'}
                 alt=""
@@ -88,7 +91,7 @@ const SingleTeacherPage = () => {
               </div>
             </div>
             {/* CARD 3 */}
-            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-full xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-[45%] xl:w-[45%] 2xl:w-[48%]">
               <Image
                 src={'/maleFemale.png'}
                 alt=""
@@ -102,7 +105,7 @@ const SingleTeacherPage = () => {
               </div>
             </div>
             {/* CARD 4 */}
-            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-full xl:w-[45%] 2xl:w-[48%]">
+            <div className="bg-white p-4 rounded-md flex gap-4 w-full md:w-[48%] lg:w-[45%] xl:w-[45%] 2xl:w-[48%]">
               <Image
                 src={'/maleFemale.png'}
                 alt=""
@@ -118,7 +121,12 @@ const SingleTeacherPage = () => {
           </div>
         </div>
         {/* BOTTOM SECTION */}
-        <div>Schedule</div>
+        <div className="mt-4 bg-white rounded-md p-4 h-[800px]">
+          <h1 className="text-lg font-semibold mb-4">
+            Teacher&apos;s Schedule
+          </h1>
+          <BigCalendar />
+        </div>
       </div>
       {/* RIGHT SIDE */}
       <div className="w-full xl:w-1/3"></div>
