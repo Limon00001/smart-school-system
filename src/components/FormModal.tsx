@@ -11,6 +11,7 @@
 // External Imports
 import { Plus, SquarePen, Trash, X } from 'lucide-react';
 import { useState } from 'react';
+import TeacherForm from './forms/TeacherForm';
 
 /**
  * Form Modal Component
@@ -74,7 +75,7 @@ const FormModal = ({
         </div>
       </form>
     ) : (
-      'Create or Update Form'
+      <TeacherForm type={'create'} />
     );
   };
 
