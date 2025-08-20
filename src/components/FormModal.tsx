@@ -10,8 +10,28 @@
 
 // External Imports
 import { Plus, SquarePen, Trash, X } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import TeacherForm from './forms/TeacherForm';
+
+// Internal Imports
+// Lazy Loading
+const TeacherForm = dynamic(() => import('./forms/TeacherForm'), {
+  loading: () => <h1>Loading...</h1>,
+});
+const StudentForm = dynamic(() => import('./forms/StudentForm'), {
+  loading: () => <h1>Loading...</h1>,
+});
+
+// Types
+import type { JSX } from 'react';
+
+// Forms Object
+const forms: {
+  [key: string]: (type: 'create' | 'update', data?: any) => JSX.Element;
+} = {
+  teacher: (type, data) => <TeacherForm type={type} data={data} />,
+  student: (type, data) => <StudentForm type={type} data={data} />,
+};
 
 /**
  * Form Modal Component
@@ -74,9 +94,9 @@ const FormModal = ({
           </button>
         </div>
       </form>
-    ) : (
-      <TeacherForm type={'create'} />
-    );
+    ) : type === 'create' || type === 'update' ? (
+      forms[table](type, data)
+    ) : null;
   };
 
   return (

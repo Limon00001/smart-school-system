@@ -13,6 +13,7 @@ import Link from 'next/link';
 // Internal Imports
 import Announcements from '@/components/Announcements';
 import BigCalendar from '@/components/BigCalendar';
+import FormModal from '@/components/FormModal';
 import Performance from '@/components/Performance';
 
 /**
@@ -39,7 +40,29 @@ const SingleTeacherPage = () => {
               />
             </div>
             <div className="w-2/3 flex flex-col gap-4 justify-between">
-              <h1 className="text-xl font-semibold">Benjamin Franklin</h1>
+              <div className="flex items-center gap-4">
+                <h1 className="text-xl font-semibold">Benjamin Franklin</h1>
+
+                {/* =============== TESTING PURPOSE ================= */}
+                <FormModal
+                  table="teacher"
+                  type="update"
+                  data={{
+                    id: 1,
+                    username: 'benjaminfranklin',
+                    email: 'test@example.com',
+                    password: 'password',
+                    firstName: 'Benjamin',
+                    lastName: 'Franklin',
+                    phone: '1234567890',
+                    address: '123 Main Street, City',
+                    bloodType: 'B+',
+                    dateOfBirth: '1990-01-01',
+                    sex: 'Male',
+                    img: 'https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg',
+                  }}
+                />
+              </div>
               <p className="text-sm text-gray-500">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
