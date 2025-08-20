@@ -6,17 +6,12 @@
  */
 
 // External Imports
-import {
-  ArrowDownWideNarrow,
-  Eye,
-  Plus,
-  SlidersHorizontal,
-  Trash,
-} from 'lucide-react';
+import { ArrowDownWideNarrow, Eye, SlidersHorizontal } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 // Internal Imports
+import FormModal from '@/components/FormModal';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import TableSearch from '@/components/TableSearch';
@@ -103,9 +98,10 @@ const StudentListPage = () => {
               </button>
             </Link>
             {role === 'admin' && (
-              <button className="w-7 h-7 flex items-center justify-center rounded-full bg-red-500/30 cursor-pointer">
-                <Trash className="w-4 h-4" />
-              </button>
+              // <button className="w-7 h-7 flex items-center justify-center rounded-full bg-red-500/30 cursor-pointer">
+              //   <Trash className="w-4 h-4" />
+              // </button>
+              <FormModal table="student" type="delete" id={item.id} />
             )}
           </div>
         </td>
@@ -130,9 +126,12 @@ const StudentListPage = () => {
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
               <ArrowDownWideNarrow className="w-4 h-4" />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
-              <Plus className="w-4 h-4" />
-            </button>
+            {role === 'admin' && (
+              // <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
+              //   <Plus className="w-4 h-4" />
+              // </button>
+              <FormModal table="student" type="create" />
+            )}
           </div>
         </div>
       </div>

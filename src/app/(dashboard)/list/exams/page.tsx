@@ -6,16 +6,10 @@
  */
 
 // External Imports
-import {
-  ArrowDownWideNarrow,
-  Plus,
-  SlidersHorizontal,
-  SquarePen,
-  Trash,
-} from 'lucide-react';
-import Link from 'next/link';
+import { ArrowDownWideNarrow, SlidersHorizontal } from 'lucide-react';
 
 // Internal Imports
+import FormModal from '@/components/FormModal';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import TableSearch from '@/components/TableSearch';
@@ -73,15 +67,19 @@ const ExamListPage = () => {
         <td className="hidden md:table-cell">{item.date}</td>
         <td>
           <div className="flex items-center gap-2">
-            <Link href={`/list/teachers/${item.id}`}>
+            {/* <Link href={`/list/teachers/${item.id}`}>
               <button className="w-7 h-7 flex items-center justify-center rounded-full text-gray-600 bg-appSky cursor-pointer">
                 <SquarePen className="w-4 h-4" />
               </button>
-            </Link>
+            </Link> */}
             {role === 'admin' && (
-              <button className="w-7 h-7 flex items-center justify-center rounded-full bg-red-500/30 cursor-pointer">
+              <>
+                {/* <button className="w-7 h-7 flex items-center justify-center rounded-full bg-red-500/30 cursor-pointer">
                 <Trash className="w-4 h-4" />
-              </button>
+              </button> */}
+                <FormModal table="exam" type="update" data={item} />
+                <FormModal table="exam" type="delete" id={item.id} />
+              </>
             )}
           </div>
         </td>
@@ -106,9 +104,12 @@ const ExamListPage = () => {
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
               <ArrowDownWideNarrow className="w-4 h-4" />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
-              <Plus className="w-4 h-4" />
-            </button>
+            {role === 'admin' && (
+              // <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
+              //   <Plus className="w-4 h-4" />
+              // </button>
+              <FormModal table="exam" type="create" />
+            )}
           </div>
         </div>
       </div>
