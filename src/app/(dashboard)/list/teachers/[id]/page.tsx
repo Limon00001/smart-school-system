@@ -44,19 +44,19 @@ const SingleTeacherPage = () => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
               <div className="flex items-center justify-between gap-2 text-xs font-medium flex-wrap">
-                <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
+                <div className="w-full md:w-1/3 lg:w-full flex items-center gap-2">
                   <Droplet className="w-4 h-4" />
                   <span>A+</span>
                 </div>
-                <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
+                <div className="w-full md:w-1/3 lg:w-full flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   <span>January 2025</span>
                 </div>
-                <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
+                <div className="w-full md:w-1/3 lg:w-full flex items-center gap-2">
                   <Mail className="w-4 h-4" />
                   <span>9Dl6y@example.com</span>
                 </div>
-                <div className="w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2">
+                <div className="w-full md:w-1/3 lg:w-full flex items-center gap-2">
                   <Phone className="w-4 h-4" />
                   <span>+880 1234 5678</span>
                 </div>
