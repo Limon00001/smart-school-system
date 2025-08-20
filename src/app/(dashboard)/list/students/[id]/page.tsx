@@ -1,7 +1,7 @@
 /**
  * Author: Monayem Hossain Limon
  * GitHub: https://github.com/Limon00001
- * Date: 19 Aug, 2025
+ * Date: 20 Aug, 2025
  * @copyright 2025 monayem_hossain_limon
  */
 
@@ -16,9 +16,9 @@ import BigCalendar from '@/components/BigCalendar';
 import Performance from '@/components/Performance';
 
 /**
- * Individual Teacher Page Component
+ * Individual Student Page Component
  */
-const SingleTeacherPage = () => {
+const SingleStudentPage = () => {
   return (
     <div className="flex-1 flex flex-col xl:flex-row gap-4 p-4">
       {/* LEFT SIDE */}
@@ -30,7 +30,7 @@ const SingleTeacherPage = () => {
             <div className="w-1/3">
               <Image
                 src={
-                  'https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg'
+                  'https://images.pexels.com/photos/3793238/pexels-photo-3793238.jpeg'
                 }
                 alt=""
                 width={144}
@@ -39,7 +39,7 @@ const SingleTeacherPage = () => {
               />
             </div>
             <div className="w-2/3 flex flex-col gap-4 justify-between">
-              <h1 className="text-xl font-semibold">Benjamin Franklin</h1>
+              <h1 className="text-xl font-semibold">Molly Malanie</h1>
               <p className="text-sm text-gray-500">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </p>
@@ -89,8 +89,8 @@ const SingleTeacherPage = () => {
                 className="w-6 h-6"
               />
               <div>
-                <h1 className="text-xl font-semibold">2</h1>
-                <span className="text-sm text-gray-500">Branches</span>
+                <h1 className="text-xl font-semibold">6th</h1>
+                <span className="text-sm text-gray-500">Grade</span>
               </div>
             </div>
             {/* CARD 3 */}
@@ -103,7 +103,7 @@ const SingleTeacherPage = () => {
                 className="w-6 h-6"
               />
               <div>
-                <h1 className="text-xl font-semibold">6</h1>
+                <h1 className="text-xl font-semibold">18</h1>
                 <span className="text-sm text-gray-500">Lessons</span>
               </div>
             </div>
@@ -117,8 +117,8 @@ const SingleTeacherPage = () => {
                 className="w-6 h-6"
               />
               <div>
-                <h1 className="text-xl font-semibold">6</h1>
-                <span className="text-sm text-gray-500">Classes</span>
+                <h1 className="text-xl font-semibold">6A</h1>
+                <span className="text-sm text-gray-500">Class</span>
               </div>
             </div>
           </div>
@@ -126,7 +126,7 @@ const SingleTeacherPage = () => {
         {/* BOTTOM SECTION */}
         <div className="mt-4 bg-white rounded-md p-4 h-[800px]">
           <h1 className="text-xl font-semibold mb-4">
-            Teacher&apos;s Schedule
+            Students&apos;s Schedule
           </h1>
           <BigCalendar />
         </div>
@@ -138,13 +138,13 @@ const SingleTeacherPage = () => {
           <h1 className="text-xl font-semibold">Shortcuts</h1>
           <div className="mt-4 flex gap-4 flex-wrap text-xs text-gray-500">
             <Link href={'/'} className="p-3 rounded-md bg-appSkyLight">
-              Teacher&apos;s Classes
+              Teacher&apos;s Lessons
             </Link>
             <Link href={'/'} className="p-3 rounded-md bg-appPurpleLight">
-              Teacher&apos;s Students
+              Teacher&apos;s Teachers
             </Link>
             <Link href={'/'} className="p-3 rounded-md bg-appYellowLight">
-              Teacher&apos;s Lessons
+              Teacher&apos;s Results
             </Link>
             <Link href={'/'} className="p-3 rounded-md bg-pink-50">
               Teacher&apos;s Exams
@@ -166,4 +166,4 @@ const SingleTeacherPage = () => {
 };
 
 // Export
-export default SingleTeacherPage;
+export default SingleStudentPage;
