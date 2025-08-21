@@ -5,26 +5,73 @@
  * @copyright 2025 monayem_hossain_limon
  */
 
+// Client Component
+'use client';
+
+// External Imports
+import { useRouter } from 'next/navigation';
+
+// Internal Imports
+import { ITEMS_PER_PAGE } from '@/lib/settings';
+
 /**
  * Pagination Component
  */
-const Pagination = () => {
+const Pagination = ({ page, count }: { page: number; count: number }) => {
+  // Router Hook
+  const router = useRouter();
+
+  // Check if there is a previous page
+  const hasPrev = ITEMS_PER_PAGE * (page - 1) > 0;
+
+  // Check if there is a next page
+  const hasNext = ITEMS_PER_PAGE * (page - 1) + ITEMS_PER_PAGE < count;
+
+  // Page Change Handler Function
+  const changePage = (newPage: number) => {
+    // Get URL Params
+    const params = new URLSearchParams(window.location.search);
+
+    // Update Page
+    params.set('page', newPage.toString());
+
+    // Update URL
+    router.push(`${window.location.pathname}?${params.toString()}`);
+  };
+
   return (
     <div className="p-4 flex items-center justify-between text-gray-500">
       <button
-        disabled
+        onClick={() => changePage(page - 1)}
+        disabled={!hasPrev}
         className="py-2 px-4 rounded-md bg-slate-200 text-xs font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Prev
       </button>
       <div className="flex items-center gap-2 text-sm">
-        <button className="px-2 rounded-sm bg-appSky">1</button>
-        <button className="px-2 rounded-sm">2</button>
-        <button className="px-2 rounded-sm">3</button>
-        ...
-        <button className="px-2 rounded-sm">10</button>
+        {Array.from({ length: Math.ceil(count / ITEMS_PER_PAGE) }).map(
+          (_, index) => {
+            const pageIndex = index + 1;
+
+            return (
+              <button
+                key={pageIndex}
+                className={`px-2 rounded-sm cursor-pointer ${
+                  page === pageIndex ? 'bg-appSky' : ''
+                } `}
+                onClick={() => changePage(pageIndex)}
+              >
+                {pageIndex}
+              </button>
+            );
+          },
+        )}
       </div>
-      <button className="py-2 px-4 rounded-md bg-slate-200 text-xs font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+      <button
+        onClick={() => changePage(page + 1)}
+        disabled={!hasNext}
+        className="py-2 px-4 rounded-md bg-slate-200 text-xs font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         Next
       </button>
     </div>
