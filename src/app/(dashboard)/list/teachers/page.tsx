@@ -6,7 +6,7 @@
  */
 
 // External Imports
-import { Class, Subject, Teacher } from '@prisma/client';
+import { Class, Prisma, Subject, Teacher } from '@prisma/client';
 import { ArrowDownWideNarrow, Eye, SlidersHorizontal } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -121,8 +121,30 @@ const TeacherListPage = async ({
 
   const p = page ? parseInt(page) : 1;
 
+  // Query
+  const query: Prisma.TeacherWhereInput = {};
+
+  /***
+   * Query Params Filter
+   */
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
+          case 'classId':
+            query.lessons = {
+              some: {
+                classId: parseInt(value),
+              },
+            };
+        }
+      }
+    }
+  }
+
   const [data, count] = await prisma.$transaction([
     prisma.teacher.findMany({
+      where: query,
       include: {
         subjects: true,
         classes: true,
@@ -130,7 +152,7 @@ const TeacherListPage = async ({
       take: ITEMS_PER_PAGE,
       skip: (p - 1) * ITEMS_PER_PAGE,
     }),
-    prisma.teacher.count(),
+    prisma.teacher.count({ where: query }),
   ]);
 
   return (
