@@ -1,0 +1,237 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id              String      @id
+  username        String      @unique
+}
+
+model Student {
+  id              String      @id
+  username        String      @unique
+  name            String
+  surname         String
+  email           String?     @unique
+  phone           String?     @unique
+  address         String
+  img             String?
+  bloodType       String
+  sex             UserSex
+  createdAt       DateTime    @default(now())
+
+  parent          Parent      @relation(fields: [parentId], references: [id])
+  parentId        String
+
+  class           Class       @relation(fields: [classId], references: [id])
+  classId         Int
+  
+  grade           Grade       @relation(fields: [gradeId], references: [id])
+  gradeId         Int
+
+  // EACH STUDENT CAN HAVE MULTIPLE RESULT RECORDS
+  results         Result[]
+
+  // A STUDENT CAN HAVE MULTIPLE ATTENDANCE RECORDS
+  attendances     Attendance[]
+}
+
+model Parent {
+  id              String      @id
+  username        String      @unique
+  name            String
+  surname         String
+  email           String?     @unique
+  phone           String      @unique
+  address         String
+  createdAt       DateTime    @default(now())
+
+  // AS EACH PARENT CAN HAVE MULTIPLE STUDENTS
+  students  Student[]
+}
+
+model Teacher {
+  id              String      @id
+  username        String      @unique
+  name            String
+  surname         String
+  email           String?     @unique
+  phone           String?     @unique
+  address         String
+  img             String?
+  bloodType       String
+  sex             UserSex
+  createdAt       DateTime    @default(now())
+
+  // EACH TEACHER CAN HAVE MULTIPLE SUBJECTS
+  subjects        Subject[]
+
+  // EACH TEACHER CAN TAKE MULTIPLE LESSONS
+  lessons         Lesson[]
+
+  // EACH TEACHER CAN HAVE MULTIPLE CLASSES
+  classes         Class[]
+}
+
+model Subject {
+  id              Int         @id         @default(autoincrement())
+  name            String      @unique
+
+  // ONE SUBJECT CAN BE ASSIGNED TO MANY TEACHERS
+  teachers        Teacher[]
+
+  // ONE SUBJECT CAN INCLUDE MANY LESSONS
+  lessons         Lesson[]
+}
+
+model Lesson {
+  id              Int         @id         @default(autoincrement())
+  name            String      @unique
+  date            Day
+  startTime       DateTime
+  endTime         DateTime
+
+  subject         Subject     @relation(fields: [subjectId], references: [id])
+  subjectId       Int
+  
+  class           Class       @relation(fields: [classId], references: [id])
+  classId         Int
+  
+  teacher         Teacher     @relation(fields: [teacherId], references: [id])
+  teacherId       String
+
+  // EACH LESSON CAN HAVE MULTIPLE EXAMS
+  exams           Exam[]
+
+  // EACH LESSON CAN HAVE MULTIPLE ASSIGNMENTS
+  assignments     Assignment[]
+
+  // EACH LESSON CAN HAVE MULTIPLE ATTENDANCE RECORDS
+  attendances     Attendance[]
+}
+
+model Class {
+  id              Int         @id         @default(autoincrement())
+  name            String      @unique
+  capacity        Int
+
+  supervisor      Teacher?    @relation(fields: [supervisorId], references: [id])
+  supervisorId    String?
+
+  grade           Grade       @relation(fields: [gradeId], references: [id])
+  gradeId         Int
+
+  // ONE CLASS CAN HAVE MANY LESSONS
+  lesson          Lesson[]
+
+  // ONE CLASS CONTAINS MANY STUDENTS
+  students        Student[]
+
+  // ONE CLASS CAN HAVE MULTIPLE EVENTS
+  events          Event[]
+
+  // ONE CLASS CAN HAVE MULTIPLE ANNOUNCEMENTS
+  announcements   Announcement[]
+}
+
+model Grade {
+  id              Int         @id         @default(autoincrement())
+  level           Int         @unique
+
+  // EACH GRADE INCLUDES MANY STUDENTS
+  students        Student[]
+
+  // EACH GRADE IS DIVIDED INTO MULTIPLE CLASSES
+  classes         Class[]
+}
+
+model Exam {
+  id              Int         @id         @default(autoincrement())
+  title           String
+  startTime       DateTime
+  endTime         DateTime
+
+  lesson          Lesson      @relation(fields: [lessonId], references: [id])
+  lessonId        Int
+
+  // EACH EXAM HAS MULTIPLE RESULT RECORDS
+  results         Result[]
+}
+
+model Assignment {
+  id              Int         @id         @default(autoincrement())
+  title           String
+  startDate       DateTime
+  dueDate         DateTime
+
+  lesson          Lesson      @relation(fields: [lessonId], references: [id])
+  lessonId        Int
+
+  // EACH EXAM HAS MULTIPLE RESULT RECORDS
+  results         Result[]  
+}
+
+model Result {
+  id              Int         @id         @default(autoincrement())
+  score           Int
+
+  exam            Exam?       @relation(fields: [examId], references: [id])
+  examId          Int?
+
+  assignment      Assignment? @relation(fields: [assignmentId], references: [id])
+  assignmentId    Int?
+
+  student         Student     @relation(fields: [studentId], references: [id])
+  studentId       String
+}
+
+model Attendance {
+  id              Int         @id         @default(autoincrement())
+  date            DateTime
+  present         Boolean
+
+  student         Student     @relation(fields: [studentId], references: [id])
+  studentId       String
+
+  lesson          Lesson      @relation(fields: [lessonId], references: [id])
+  lessonId        Int
+}
+
+model Event {
+  id              Int         @id         @default(autoincrement())
+  title           String
+  description     String
+  startTime       DateTime
+  endTime         DateTime
+
+  class           Class?       @relation(fields: [classId], references: [id])
+  classId         Int?
+}
+
+model Announcement {
+  id              Int         @id         @default(autoincrement())
+  title           String
+  description     String
+  date            DateTime
+
+  class           Class?       @relation(fields: [classId], references: [id])
+  classId         Int?
+}
+
+enum UserSex {
+  MALE
+  FEMALE
+}
+
+enum Day {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
