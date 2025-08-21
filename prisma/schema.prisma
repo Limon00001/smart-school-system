@@ -127,7 +127,7 @@ model Class {
   gradeId         Int
 
   // ONE CLASS CAN HAVE MANY LESSONS
-  lesson          Lesson[]
+  lessons          Lesson[]
 
   // ONE CLASS CONTAINS MANY STUDENTS
   students        Student[]

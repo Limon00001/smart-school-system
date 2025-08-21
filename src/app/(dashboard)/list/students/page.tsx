@@ -6,6 +6,7 @@
  */
 
 // External Imports
+import { Class, Prisma, Student } from '@prisma/client';
 import { ArrowDownWideNarrow, Eye, SlidersHorizontal } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,20 +16,12 @@ import FormModal from '@/components/FormModal';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import TableSearch from '@/components/TableSearch';
-import { role, studentsData } from '@/lib/data';
+import { role } from '@/lib/data';
+import prisma from '@/lib/prisma';
+import { ITEMS_PER_PAGE } from '@/lib/settings';
 
 // Types
-type Student = {
-  id: number;
-  studentId: string;
-  name: string;
-  email?: string;
-  photo: string;
-  phone?: string;
-  grade: number;
-  class: string;
-  address: string;
-};
+type StudentList = Student & { class: Class };
 
 // Data
 const columns = [
@@ -62,52 +55,102 @@ const columns = [
   },
 ];
 
+// Render Table Row
+const renderRow = (item: StudentList) => {
+  return (
+    <tr
+      key={item.id}
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-appPurpleLight"
+    >
+      <td className="flex items-center gap-4 p-4">
+        <Image
+          src={item.img || '/avatar.png'}
+          alt=""
+          width={40}
+          height={40}
+          className="md:hidden xl:block w-10 h-10 rounded-full object-cover"
+        />
+        <div className="flex flex-col">
+          <h3 className="font-semibold">{item.name}</h3>
+          <p className="text-xs text-gray-500">{item.class.name}</p>
+        </div>
+      </td>
+      <td className="hidden md:table-cell">{item.username}</td>
+      <td className="hidden md:table-cell">{item.class.name[0]}</td>
+      <td className="hidden lg:table-cell">{item.phone}</td>
+      <td className="hidden lg:table-cell">{item.address}</td>
+      <td>
+        <div className="flex items-center gap-2">
+          <Link href={`/list/students/${item.id}`}>
+            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-appSky cursor-pointer">
+              <Eye className="w-4 h-4" />
+            </button>
+          </Link>
+          {role === 'admin' && (
+            // <button className="w-7 h-7 flex items-center justify-center rounded-full bg-red-500/30 cursor-pointer">
+            //   <Trash className="w-4 h-4" />
+            // </button>
+            <FormModal table="student" type="delete" id={item.id} />
+          )}
+        </div>
+      </td>
+    </tr>
+  );
+};
+
 /**
  * Student List Page
  */
-const StudentListPage = () => {
-  // Render Table Row
-  const renderRow = (item: Student) => {
-    return (
-      <tr
-        key={item.id}
-        className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-appPurpleLight"
-      >
-        <td className="flex items-center gap-4 p-4">
-          <Image
-            src={item.photo}
-            alt=""
-            width={40}
-            height={40}
-            className="md:hidden xl:block w-10 h-10 rounded-full object-cover"
-          />
-          <div className="flex flex-col">
-            <h3 className="font-semibold">{item.name}</h3>
-            <p className="text-xs text-gray-500">{item.class}</p>
-          </div>
-        </td>
-        <td className="hidden md:table-cell">{item.studentId}</td>
-        <td className="hidden md:table-cell">{item.grade}</td>
-        <td className="hidden lg:table-cell">{item.phone}</td>
-        <td className="hidden lg:table-cell">{item.address}</td>
-        <td>
-          <div className="flex items-center gap-2">
-            <Link href={`/list/students/${item.id}`}>
-              <button className="w-7 h-7 flex items-center justify-center rounded-full bg-appSky cursor-pointer">
-                <Eye className="w-4 h-4" />
-              </button>
-            </Link>
-            {role === 'admin' && (
-              // <button className="w-7 h-7 flex items-center justify-center rounded-full bg-red-500/30 cursor-pointer">
-              //   <Trash className="w-4 h-4" />
-              // </button>
-              <FormModal table="student" type="delete" id={item.id} />
-            )}
-          </div>
-        </td>
-      </tr>
-    );
-  };
+const StudentListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  // Pagination
+  const { page, ...queryParams } = searchParams;
+
+  const p = page ? parseInt(page) : 1;
+
+  // Query
+  const query: Prisma.StudentWhereInput = {};
+
+  /***
+   * Query Params Filter
+   */
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
+          case 'teacherId':
+            query.class = {
+              lesson: {
+                some: {
+                  teacherId: value,
+                },
+              },
+            };
+            break;
+          case 'search':
+            query.name = {
+              contains: value,
+              mode: 'insensitive',
+            };
+        }
+      }
+    }
+  }
+
+  const [data, count] = await prisma.$transaction([
+    prisma.student.findMany({
+      where: query,
+      include: {
+        class: true,
+      },
+      take: ITEMS_PER_PAGE,
+      skip: (p - 1) * ITEMS_PER_PAGE,
+    }),
+    prisma.student.count({ where: query }),
+  ]);
 
   return (
     <div className="flex-1 bg-white p-4 rounded-md m-4 mt-0">
@@ -137,10 +180,10 @@ const StudentListPage = () => {
       </div>
 
       {/* TABLE SECTION */}
-      <Table columns={columns} renderRow={renderRow} data={studentsData} />
+      <Table columns={columns} renderRow={renderRow} data={data} />
 
       {/* PAGINATION */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };
