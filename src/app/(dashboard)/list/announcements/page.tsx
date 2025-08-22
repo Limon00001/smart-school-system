@@ -25,6 +25,7 @@ type AnnouncementList = Announcement & { class: Class };
 const user = await getCurrentUser();
 
 const role = user?.role;
+const userId = user?.userId;
 
 // Data
 const columns = [
@@ -59,7 +60,7 @@ const renderRow = (item: AnnouncementList) => {
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-appPurpleLight"
     >
       <td className="flex items-center gap-4 p-4">{item.title}</td>
-      <td>{item.class.name}</td>
+      <td>{item.class?.name || '-'}</td>
       <td className="hidden md:table-cell">
         {new Intl.DateTimeFormat('en-US').format(item.date)}
       </td>
@@ -119,6 +120,63 @@ const AnnouncementListPage = async ({
         }
       }
     }
+  }
+
+  // Role Filter
+  switch (role) {
+    case 'admin':
+      break;
+    case 'teacher':
+      query.OR = [
+        {
+          classId: null,
+        },
+        {
+          class: {
+            lessons: {
+              some: {
+                teacherId: userId!,
+              },
+            },
+          },
+        },
+      ];
+      break;
+    case 'student':
+      query.OR = [
+        {
+          classId: null,
+        },
+        {
+          class: {
+            students: {
+              some: {
+                id: userId!,
+              },
+            },
+          },
+        },
+      ];
+      break;
+    case 'parent':
+      query.OR = [
+        {
+          classId: null,
+        },
+        {
+          class: {
+            students: {
+              some: {
+                parentId: userId!,
+              },
+            },
+          },
+        },
+      ];
+      break;
+
+    default:
+      break;
   }
 
   const [data, count] = await prisma.$transaction([
