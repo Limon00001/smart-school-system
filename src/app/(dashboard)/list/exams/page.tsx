@@ -14,9 +14,9 @@ import FormModal from '@/components/FormModal';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import TableSearch from '@/components/TableSearch';
-import { role } from '@/lib/data';
 import prisma from '@/lib/prisma';
 import { ITEMS_PER_PAGE } from '@/lib/settings';
+import { getCurrentUser } from '@/lib/utils';
 
 // Types
 type ExamList = Exam & {
@@ -26,6 +26,12 @@ type ExamList = Exam & {
     teacher: Teacher;
   };
 };
+
+// Current User
+const user = await getCurrentUser();
+
+const role = user?.role;
+const userId = user?.userId;
 
 // Data
 const columns = [
@@ -47,10 +53,14 @@ const columns = [
     accessor: 'date',
     className: 'hidden md:table-cell',
   },
-  {
-    header: 'Actions',
-    accessor: 'action',
-  },
+  ...(role === 'admin' || role === 'teacher'
+    ? [
+        {
+          header: 'Actions',
+          accessor: 'action',
+        },
+      ]
+    : []),
 ];
 
 // Render Table Row
@@ -75,7 +85,7 @@ const renderRow = (item: ExamList) => {
               <SquarePen className="w-4 h-4" />
             </button>
           </Link> */}
-          {role === 'admin' && (
+          {(role === 'admin' || role === 'teacher') && (
             <>
               {/* <button className="w-7 h-7 flex items-center justify-center rounded-full bg-red-500/30 cursor-pointer">
               <Trash className="w-4 h-4" />
@@ -140,6 +150,42 @@ const ExamListPage = async ({
     }
   }
 
+  // Role Filter
+  switch (role) {
+    case 'admin':
+      break;
+    case 'teacher':
+      query.lesson = {
+        teacherId: userId!,
+      };
+      break;
+    case 'student':
+      query.lesson = {
+        class: {
+          students: {
+            some: {
+              id: userId!,
+            },
+          },
+        },
+      };
+      break;
+    case 'parent':
+      query.lesson = {
+        class: {
+          students: {
+            some: {
+              parentId: userId!,
+            },
+          },
+        },
+      };
+      break;
+
+    default:
+      break;
+  }
+
   const [data, count] = await prisma.$transaction([
     prisma.exam.findMany({
       where: query,
@@ -188,7 +234,7 @@ const ExamListPage = async ({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
               <ArrowDownWideNarrow className="w-4 h-4" />
             </button>
-            {role === 'admin' && (
+            {(role === 'admin' || role === 'teacher') && (
               // <button className="w-8 h-8 flex items-center justify-center rounded-full bg-appYellow cursor-pointer">
               //   <Plus className="w-4 h-4" />
               // </button>
