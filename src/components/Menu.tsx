@@ -6,6 +6,7 @@
  */
 
 // External Imports
+import { currentUser } from '@clerk/nextjs/server';
 import {
   BookCheck,
   Calendar,
@@ -26,9 +27,6 @@ import {
   Users,
 } from 'lucide-react';
 import Link from 'next/link';
-
-// Internal Imports
-import { role } from '@/lib/data';
 
 // Menu Items Array
 const menuItems = [
@@ -149,7 +147,13 @@ const menuItems = [
 /**
  * Menu Component
  */
-const Menu = () => {
+const Menu = async () => {
+  // Get User from Clerk
+  const user = await currentUser();
+
+  // Get User Role from user
+  const role = user?.publicMetadata?.role as string;
+
   return (
     <div className="mt-4 text-sm">
       {menuItems.map((menuItem) => (

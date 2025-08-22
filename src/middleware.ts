@@ -23,11 +23,12 @@ const matchers = Object.keys(routeAccessMap).map((route) => ({
 // Middleware Function
 export default clerkMiddleware(async (auth, req) => {
   /**
-   * Get User Role from Clerk
+   * Get User Role from Clerk session
    */
   const { sessionClaims } = await auth();
   const role = (sessionClaims?.metadata as { role?: string })?.role;
 
+  // If the user has no role (maybe not signed in), just let them continue
   if (!role) {
     return NextResponse.next();
   }
