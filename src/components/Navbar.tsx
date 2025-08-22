@@ -6,7 +6,8 @@
  */
 
 // External Imports
-import { CircleUser, Megaphone, MessageSquareMore, Search } from 'lucide-react';
+import { UserButton } from '@clerk/nextjs';
+import { Megaphone, MessageSquareMore, Search } from 'lucide-react';
 
 /**
  * Navbar Component
@@ -39,7 +40,8 @@ const Navbar = () => {
           <span className="text-xs leading-3 font-medium">Monayem Hossain</span>
           <span className="text-[10px] text-gray-500 text-right">Admin</span>
         </div>
-        <CircleUser className="h-9 w-9 rounded-full" />
+        {/* <CircleUser className="h-9 w-9 rounded-full" /> */}
+        <UserButton />
       </div>
     </div>
   );
