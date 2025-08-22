@@ -6,6 +6,7 @@
  */
 
 // External Imports
+import { Prisma, Subject, Teacher } from '@prisma/client';
 import { ArrowDownWideNarrow, SlidersHorizontal } from 'lucide-react';
 
 // Internal Imports
@@ -16,7 +17,6 @@ import TableSearch from '@/components/TableSearch';
 import { role } from '@/lib/data';
 import prisma from '@/lib/prisma';
 import { ITEMS_PER_PAGE } from '@/lib/settings';
-import { Prisma, Subject, Teacher } from '@prisma/client';
 
 // Types
 type SubjectList = Subject & { teachers: Teacher[] };

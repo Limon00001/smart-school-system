@@ -6,7 +6,7 @@
  */
 
 // Constants
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 10;
 
 // Export
 export { ITEMS_PER_PAGE };
