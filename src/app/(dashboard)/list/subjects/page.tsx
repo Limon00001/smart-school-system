@@ -14,12 +14,18 @@ import FormModal from '@/components/FormModal';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import TableSearch from '@/components/TableSearch';
-import { role } from '@/lib/data';
 import prisma from '@/lib/prisma';
 import { ITEMS_PER_PAGE } from '@/lib/settings';
+import { getCurrentUser } from '@/lib/utils';
 
 // Types
 type SubjectList = Subject & { teachers: Teacher[] };
+
+// Current User
+const user = await getCurrentUser();
+
+const role = user?.role;
+const userId = user?.userId;
 
 // Data
 const columns = [
