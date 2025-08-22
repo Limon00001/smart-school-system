@@ -143,6 +143,9 @@ const TeacherListPage = async ({
               contains: value,
               mode: 'insensitive',
             };
+            break;
+          default:
+            break;
         }
       }
     }

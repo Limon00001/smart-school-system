@@ -123,7 +123,7 @@ const StudentListPage = async ({
         switch (key) {
           case 'teacherId':
             query.class = {
-              lesson: {
+              lessons: {
                 some: {
                   teacherId: value,
                 },
@@ -135,6 +135,9 @@ const StudentListPage = async ({
               contains: value,
               mode: 'insensitive',
             };
+            break;
+          default:
+            break;
         }
       }
     }
