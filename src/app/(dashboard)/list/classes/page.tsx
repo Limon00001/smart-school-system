@@ -25,7 +25,6 @@ type ClassList = Class & { supervisor: Teacher };
 const user = await getCurrentUser();
 
 const role = user?.role;
-const userId = user?.userId;
 
 // Data
 const columns = [

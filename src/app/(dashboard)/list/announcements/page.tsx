@@ -14,12 +14,17 @@ import FormModal from '@/components/FormModal';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import TableSearch from '@/components/TableSearch';
-import { role } from '@/lib/data';
 import prisma from '@/lib/prisma';
 import { ITEMS_PER_PAGE } from '@/lib/settings';
+import { getCurrentUser } from '@/lib/utils';
 
 // Types
-type AnnouncementList = Announcement & {class: Class}
+type AnnouncementList = Announcement & { class: Class };
+
+// Current User
+const user = await getCurrentUser();
+
+const role = user?.role;
 
 // Data
 const columns = [
@@ -36,10 +41,14 @@ const columns = [
     accessor: 'date',
     className: 'hidden md:table-cell',
   },
-  {
-    header: 'Actions',
-    accessor: 'action',
-  },
+  ...(role === 'admin'
+    ? [
+        {
+          header: 'Actions',
+          accessor: 'action',
+        },
+      ]
+    : []),
 ];
 
 // Render Table Row
@@ -51,7 +60,9 @@ const renderRow = (item: AnnouncementList) => {
     >
       <td className="flex items-center gap-4 p-4">{item.title}</td>
       <td>{item.class.name}</td>
-      <td className="hidden md:table-cell">{new Intl.DateTimeFormat('en-US').format(item.date)}</td>
+      <td className="hidden md:table-cell">
+        {new Intl.DateTimeFormat('en-US').format(item.date)}
+      </td>
       <td>
         <div className="flex items-center gap-2">
           {/* <Link href={`/list/teachers/${item.id}`}>
