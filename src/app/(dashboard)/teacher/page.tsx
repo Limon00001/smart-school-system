@@ -7,19 +7,26 @@
 
 // Internal Imports
 import Announcements from '@/components/Announcements';
-import BigCalendar from '@/components/BigCalendar';
+import BigCalendarContainer from '@/components/BigCalendarContainer';
+import { getCurrentUser } from '@/lib/utils';
 
 /**
  * Teacher Page
  */
-const TeacherPage = () => {
+const TeacherPage = async () => {
+  // Current User
+  const user = await getCurrentUser();
+
+  // User ID
+  const userId = user?.userId;
+
   return (
     <div className="flex-1 flex flex-col xl:flex-row gap-4 p-4">
       {/* LEFT SIDE */}
       <div className="w-full xl:w-2/3">
         <div className="h-full bg-white p-4 rounded-md">
           <h1 className="text-xl font-semibold">Schedule</h1>
-          <BigCalendar />
+          <BigCalendarContainer type="teacherId" id={userId!} />
         </div>
       </div>
       {/* RIGHT SIDE */}
