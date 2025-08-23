@@ -8,7 +8,7 @@
 // Internal Imports
 import Announcements from '@/components/Announcements';
 import AttendenceChart from '@/components/AttendenceChart';
-import CountChart from '@/components/CountChart';
+import CountChartContainer from '@/components/CountChartContainer';
 import EventCalendar from '@/components/EventCalendar';
 import FinanceChart from '@/components/FinanceChart';
 import UserCards from '@/components/UserCards';
@@ -32,7 +32,7 @@ const AdminPage = () => {
         <div className="flex gap-4 flex-col lg:flex-row">
           {/* LEFT CHART */}
           <div className="w-full lg:w-1/3 h-[450px]">
-            <CountChart />
+            <CountChartContainer />
           </div>
           {/* RIGHT CHART */}
           <div className="w-full lg:w-2/3 h-[450px]">
